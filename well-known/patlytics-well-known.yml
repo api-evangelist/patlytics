@@ -1,0 +1,97 @@
+generated: '2026-08-02'
+method: searched
+source: probed live hosts on 2026-08-02
+hosts:
+- host: https://mcp.patlytics.ai
+  role: MCP server (Streamable HTTP) + OAuth 2.1 authorization server
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    spec: RFC 8414
+    status: 200
+    file: patlytics-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource/mcp
+    spec: RFC 9728
+    status: 200
+    file: patlytics-oauth-protected-resource.json
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://api.patlytics.ai
+  role: platform API host (fully authentication-gated)
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+  note: >-
+    Every path on api.patlytics.ai returns 401 {"detail":"Authorization header is missing"},
+    including the /.well-known/ surface, so no anonymous discovery document is available.
+- host: https://www.patlytics.ai
+  role: marketing site (Webflow)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://dashboard.patlytics.ai
+  role: customer web application
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://status.patlytics.ai
+  role: status page (Atlassian Statuspage)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    third_party: true
+    served_by: Atlassian Statuspage
+    file: null
+    note: >-
+      NOT a Patlytics document. The body is Atlassian's own PGP-signed RFC 9116 file
+      (Canonical: https://www.atlassian.com/.well-known/security.txt, Contact:
+      security@atlassian.com), served by the Statuspage platform for every hosted status
+      subdomain. Deliberately not saved and no SecurityTxt pointer is emitted — Patlytics
+      publishes no security.txt of its own on any host it controls.
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+summary:
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: true
+  oauth_protected_resource: true
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false

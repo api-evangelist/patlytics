@@ -1,0 +1,76 @@
+generated: '2026-08-02'
+method: searched
+source: https://mcp.patlytics.ai/.well-known/oauth-authorization-server
+docs: https://mcp.patlytics.ai/docs
+summary:
+  types: [oauth2, http]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, refreshToken]
+  bearer_methods: [header]
+  dynamic_client_registration: true
+  pkce_required_methods: [S256]
+  note: >-
+    Patlytics publishes no public REST OpenAPI, so this profile is searched from the live
+    RFC 8414 / RFC 9728 discovery documents on the MCP host plus the provider-published
+    connector page, not derived from a spec.
+schemes:
+- name: PatlyticsOAuth
+  type: oauth2
+  applies_to: https://mcp.patlytics.ai/mcp
+  spec: OAuth 2.1 (RFC 6749 + RFC 7636 PKCE + RFC 7591 DCR + RFC 8414 + RFC 9728)
+  issuer: https://mcp.patlytics.ai/
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://mcp.patlytics.ai/authorize
+    tokenUrl: https://mcp.patlytics.ai/token
+    refreshUrl: https://mcp.patlytics.ai/token
+    scopes:
+      patent:search: Semantic patent and non-patent-literature search
+      patent:read: Read patent records, claims, portfolios and vault contents
+  registration_endpoint: https://mcp.patlytics.ai/register
+  revocation_endpoint: https://mcp.patlytics.ai/revoke
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code, refresh_token]
+  token_endpoint_auth_methods_supported: [client_secret_post, client_secret_basic]
+  revocation_endpoint_auth_methods_supported: [client_secret_post, client_secret_basic]
+  code_challenge_methods_supported: [S256]
+  sources:
+  - well-known/patlytics-oauth-authorization-server.json
+  - well-known/patlytics-oauth-protected-resource.json
+- name: PatlyticsBearer
+  type: http
+  scheme: bearer
+  applies_to: https://api.patlytics.ai
+  description: >-
+    The platform API host requires an Authorization header on every path, including the
+    /.well-known/ surface. Unauthenticated requests return HTTP 401 with the JSON body
+    {"detail":"Authorization header is missing"}. No public documentation, token-issuance
+    endpoint or discovery document is published for this host.
+  gated: true
+  sources: [probe]
+identity:
+  provider: >-
+    Patlytics' own identity provider (the connector page states sign-in is via "Patlytics'
+    identity provider"). The public status page lists an "Auth0 User Authentication"
+    component, indicating Auth0 backs end-user login for the customer dashboard.
+  per_user: true
+  org_scoped: true
+  note: >-
+    Each MCP client member signs in individually with their own Patlytics account and results
+    are scoped to their organization; there is no shared service-account or API-key model
+    published.
+x-evidence:
+  fetched: '2026-08-02'
+  probes:
+  - url: https://mcp.patlytics.ai/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json
+  - url: https://mcp.patlytics.ai/.well-known/oauth-protected-resource/mcp
+    http_status: 200
+    content_type: application/json
+  - url: https://api.patlytics.ai/
+    http_status: 401
+    content_type: application/json
+  - url: https://status.patlytics.ai/
+    http_status: 200
+    note: component list includes "Auth0 User Authentication"

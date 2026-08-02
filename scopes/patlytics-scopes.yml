@@ -1,0 +1,44 @@
+generated: '2026-08-02'
+method: searched
+source: https://mcp.patlytics.ai/.well-known/oauth-authorization-server
+docs: https://mcp.patlytics.ai/docs
+note: >-
+  Scopes are taken verbatim from the live RFC 8414 authorization-server metadata and the
+  RFC 9728 protected-resource metadata on the MCP host. Patlytics publishes no OpenAPI and no
+  separate scopes/permissions reference page, so descriptions below are the pipeline's plain
+  reading of the scope names against the published read-only tool surface, not provider copy.
+schemes:
+- name: PatlyticsOAuth
+  source: well-known/patlytics-oauth-authorization-server.json
+  issuer: https://mcp.patlytics.ai/
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://mcp.patlytics.ai/authorize
+    tokenUrl: https://mcp.patlytics.ai/token
+resources:
+- resource: https://mcp.patlytics.ai/mcp
+  authorization_servers: [https://mcp.patlytics.ai/]
+  scopes_supported: [patent:search, patent:read]
+  bearer_methods_supported: [header]
+  source: well-known/patlytics-oauth-protected-resource.json
+scopes:
+- scope: patent:search
+  description: >-
+    Run semantic searches — concept-level similarity search over patent claims and search of
+    non-patent literature (papers, journals, books via OpenAlex).
+  flows: [authorizationCode]
+  sources:
+  - well-known/patlytics-oauth-authorization-server.json
+  - well-known/patlytics-oauth-protected-resource.json
+- scope: patent:read
+  description: >-
+    Read patent records — bibliographic data and claims by publication number — and list the
+    organization's private Patlytics portfolios and vault patents.
+  flows: [authorizationCode]
+  sources:
+  - well-known/patlytics-oauth-authorization-server.json
+  - well-known/patlytics-oauth-protected-resource.json
+summary:
+  scope_count: 2
+  write_scopes: 0
+  read_only: true

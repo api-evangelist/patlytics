@@ -1,0 +1,114 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  live probes of mcp.patlytics.ai + api.patlytics.ai, plus https://www.patlytics.ai/security
+  and https://mcp.patlytics.ai/docs
+standards:
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    Hosted server at https://mcp.patlytics.ai/mcp advertised on the provider's own connector
+    page as "Model Context Protocol (Streamable HTTP)"; POST tools/list returns a JSON-RPC-shaped
+    401 with an RFC 9728 resource_metadata challenge.
+- id: mcp-streamable-http
+  name: MCP Streamable HTTP transport
+  conforms: true
+  evidence: provider-published transport statement on https://mcp.patlytics.ai/docs
+- id: oauth2
+  name: OAuth 2.0 / 2.1
+  conforms: true
+  evidence: >-
+    authorization_endpoint, token_endpoint, revocation_endpoint and authorization_code +
+    refresh_token grants published at
+    https://mcp.patlytics.ai/.well-known/oauth-authorization-server
+- id: rfc8414-as-metadata
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 application/json
+- id: rfc9728-protected-resource-metadata
+  name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource/mcp returns 200 application/json and the 401 on
+    /mcp carries WWW-Authenticate Bearer with resource_metadata
+- id: rfc7636-pkce
+  name: Proof Key for Code Exchange
+  conforms: true
+  evidence: code_challenge_methods_supported = ["S256"]
+- id: rfc7591-dynamic-client-registration
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  evidence: registration_endpoint = https://mcp.patlytics.ai/register
+- id: rfc7009-token-revocation
+  name: OAuth 2.0 Token Revocation
+  conforms: true
+  evidence: revocation_endpoint = https://mcp.patlytics.ai/revoke
+- id: rfc6750-bearer
+  name: OAuth 2.0 Bearer Token Usage
+  conforms: true
+  evidence: bearer_methods_supported = ["header"]; 401 responses use WWW-Authenticate Bearer
+- id: oidc
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns 404 on mcp.patlytics.ai and 401 on
+    api.patlytics.ai; no OIDC discovery document is published anonymously
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document found on any host. Probed /openapi.json, /openapi.yaml,
+    /swagger.json, /v1/openapi.json, /api-docs, /docs, /redoc, /schema, /api/schema against
+    www.patlytics.ai (404), api.patlytics.ai (401 or Cloudflare 403), mcp.patlytics.ai (404),
+    dashboard.patlytics.ai (404) and explore.patlytics.ai (404).
+- id: graphql
+  name: GraphQL
+  conforms: false
+  evidence: api.patlytics.ai/graphql returns 401; no GraphQL surface is published or documented
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: no event, streaming or webhook surface is published
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: >-
+    Error bodies observed are plain application/json — {"detail": "..."} on api.patlytics.ai
+    and {"error", "error_description"} (OAuth 2.0 error shape) on mcp.patlytics.ai — not
+    application/problem+json
+- id: rfc9116-security-txt
+  name: security.txt
+  conforms: false
+  evidence: >-
+    No /.well-known/security.txt on any Patlytics-controlled host. The 200 on
+    status.patlytics.ai is Atlassian Statuspage's own PGP-signed file, canonical to
+    atlassian.com.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 (or 401 on the gated
+    API host) on every probed host
+- id: soc2-type2
+  name: SOC 2 Type 2
+  conforms: true
+  evidence: published on https://www.patlytics.ai/security and https://trust.patlytics.ai/
+- id: iso-27001
+  name: ISO/IEC 27001
+  conforms: true
+  evidence: published on https://www.patlytics.ai/security
+- id: iso-42001
+  name: ISO/IEC 42001 (AI management systems)
+  conforms: true
+  evidence: published on https://www.patlytics.ai/security
+- id: gdpr
+  name: GDPR
+  conforms: true
+  evidence: published on https://www.patlytics.ai/security and the privacy policy
+summary:
+  machine_readable_contract: MCP (auth-gated tools/list)
+  openapi: false
+  graphql: false
+  asyncapi: false
+  compliance_program_published: true

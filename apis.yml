@@ -1,18 +1,80 @@
 aid: patlytics
 name: Patlytics
-description: 'Patlytics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Patlytics is an AI-powered patent intelligence platform purpose-built for
+  intellectual-property work, applying generative AI and large language models across the
+  full patent lifecycle: invention harvesting and disclosure, patent application drafting,
+  office-action analysis, prior-art and novelty search, infringement detection, invalidity
+  contentions, claim-chart generation, portfolio pruning, vault and classification, and
+  transactional IP due diligence. Founded in 2023 and headquartered in New York, the company
+  raised a $40M Series B led by SignalFire in April 2026 (roughly $65M total) and counts more
+  than 40% of the Am Law 100 among its customers. Its machine-readable surface is a hosted,
+  OAuth-protected Model Context Protocol server at mcp.patlytics.ai that exposes read-only
+  semantic patent search, patent/claims lookup, non-patent-literature search over OpenAlex,
+  and access to an organization''s private Patlytics portfolios and vault; there is no public
+  REST OpenAPI, and the platform API at api.patlytics.ai is fully authentication-gated.'
+image: https://cdn.prod.website-files.com/6799236636ce53b60c8d8ba8/679c097be11626243bdde318_Patlytics-Share.webp
 url: https://raw.githubusercontent.com/api-evangelist/patlytics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-08-02'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1
 created: '2026-08-02'
 modified: '2026-08-02'
 tags:
 - Company
-apis: []
+- Intellectual Property
+- Patents
+- Legal Tech
+- Artificial Intelligence
+- Patent Search
+- Prior Art
+- Model Context Protocol
+- Agents
+- Research
+apis:
+- aid: patlytics:patent-search-mcp
+  name: Patlytics Patent Search (MCP)
+  description: 'The Patlytics Patent Search connector — a hosted Model Context Protocol
+    server (Streamable HTTP) that brings concept-level, AI-native patent intelligence into
+    MCP clients such as Claude. Five read-only tools cover semantic prior-art discovery over
+    patent claims, bibliographic and claims lookup by publication number, non-patent-literature
+    search (papers, journals, books, via OpenAlex), and listing an organization''s private
+    Patlytics portfolios and vault patents. Access is restricted to existing Patlytics users:
+    each member signs in individually through Patlytics OAuth 2.1 (authorization code + PKCE
+    S256, dynamic client registration) and results are scoped to their organization. Deeper
+    analyses — freedom-to-operate, infringement, invalidity and drafting — run in the Patlytics
+    web application, linked from every result.'
+  humanURL: https://mcp.patlytics.ai/docs
+  baseURL: https://mcp.patlytics.ai/mcp
+  image: https://cdn.prod.website-files.com/6799236636ce53b60c8d8ba8/679c097be11626243bdde318_Patlytics-Share.webp
+  tags:
+  - Patents
+  - Patent Search
+  - Prior Art
+  - Intellectual Property
+  - Model Context Protocol
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/patlytics-mcp.yml
+  - type: Documentation
+    url: https://mcp.patlytics.ai/docs
+  - type: APIReference
+    url: https://mcp.patlytics.ai/docs
+  - type: GettingStarted
+    url: https://mcp.patlytics.ai/docs
+  - type: Authentication
+    url: authentication/patlytics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/patlytics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/patlytics-problem-types.yml
+  - type: Conventions
+    url: conventions/patlytics-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +82,56 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/patlytics_stock/
+  url: https://www.patlytics.ai/
+- type: DeveloperPortal
+  url: https://mcp.patlytics.ai/docs
+- type: Documentation
+  url: https://mcp.patlytics.ai/docs
+- type: APIReference
+  url: https://mcp.patlytics.ai/docs
+- type: GettingStarted
+  url: https://mcp.patlytics.ai/docs
+- type: MCPServer
+  url: mcp/patlytics-mcp.yml
+- type: Authentication
+  url: authentication/patlytics-authentication.yml
+- type: OAuthScopes
+  url: scopes/patlytics-scopes.yml
+- type: WellKnown
+  url: well-known/patlytics-well-known.yml
+- type: Conventions
+  url: conventions/patlytics-conventions.yml
+- type: ErrorCatalog
+  url: errors/patlytics-problem-types.yml
+- type: Conformance
+  url: conformance/patlytics-conformance.yml
+- type: Lifecycle
+  url: lifecycle/patlytics-lifecycle.yml
+- type: StatusPage
+  url: https://status.patlytics.ai/
+- type: DomainSecurity
+  url: security/patlytics-domain-security.yml
+- type: TrustCenter
+  url: security/patlytics-trust-center.yml
+- type: Compliance
+  url: https://www.patlytics.ai/security
+- type: LLMsTxt
+  url: llms/patlytics-llms.txt
+- type: Blog
+  url: https://www.patlytics.ai/blog
+- type: Support
+  url: mailto:support@patlytics.com
+- type: GitHubOrganization
+  url: https://github.com/patlytics
+- type: SignUp
+  url: https://explore.patlytics.ai/demo-request
+- type: Login
+  url: https://dashboard.patlytics.ai/
+- type: TermsOfService
+  url: https://www.patlytics.ai/terms
+- type: PrivacyPolicy
+  url: https://www.patlytics.ai/privacy-policy
+- type: News
+  url: https://www.patlytics.ai/news
+- type: About
+  url: https://www.patlytics.ai/about

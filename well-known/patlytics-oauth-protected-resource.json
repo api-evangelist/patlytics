@@ -1,0 +1,1 @@
+{"resource":"https://mcp.patlytics.ai/mcp","authorization_servers":["https://mcp.patlytics.ai/"],"scopes_supported":["patent:search","patent:read"],"bearer_methods_supported":["header"]}

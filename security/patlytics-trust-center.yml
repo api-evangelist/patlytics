@@ -1,0 +1,35 @@
+generated: '2026-08-02'
+method: searched
+probe: true
+source: https://www.patlytics.ai/security
+url: https://trust.patlytics.ai/
+security_page: https://www.patlytics.ai/security
+certifications:
+- SOC 2 Type 2
+- ISO 27001
+- ISO 42001
+- GDPR
+controls:
+- Customer data encrypted in transit and at rest
+- Customer data siloed and segregated per customer
+- Least-privilege access model
+- 24/7 monitoring with dedicated on-call rotation in NA and APAC
+- User history retained 90 days with customer-initiated deletion
+- Customer data is not used to train any AI model
+independent_assessors:
+- NCC Group
+- A-LIGN
+evidence:
+- source: https://www.patlytics.ai/security
+  http_status: 200
+  keywords: [soc 2 type 2, iso 27001, iso 42001, gdpr, ncc group, a-lign]
+- source: https://trust.patlytics.ai/
+  http_status: 403
+  note: >-
+    The hosted trust center is behind a Cloudflare interactive challenge and could not be
+    read anonymously by the pipeline. Its existence and URL are confirmed by the footer and
+    security page of www.patlytics.ai; the certification list above is taken from
+    https://www.patlytics.ai/security, which resolved 200.
+vulnerability_disclosure: none-published
+x-evidence:
+  fetched: '2026-08-02'

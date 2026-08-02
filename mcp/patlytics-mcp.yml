@@ -1,0 +1,130 @@
+generated: '2026-08-02'
+method: searched
+source: https://mcp.patlytics.ai/docs
+status: published
+server:
+  name: patlytics
+  title: Patlytics Patent Search
+  description: >-
+    Concept-level, AI-native patent intelligence inside an MCP client. Describe an invention
+    in plain language and get semantically similar patents, look up a specific patent's
+    claims, search academic literature, and browse your organization's private patent
+    portfolios. All tools are read-only; deeper analyses (freedom-to-operate, infringement,
+    invalidity, drafting) run in the Patlytics web app, linked from every result.
+  transport: http
+  transport_detail: Streamable HTTP
+  url: https://mcp.patlytics.ai/mcp
+  docs: https://mcp.patlytics.ai/docs
+  audience: existing Patlytics users only; each member signs in individually and results are
+    scoped to their organization
+  read_only: true
+install:
+  claude_desktop: Settings → Connectors → Add custom connector → https://mcp.patlytics.ai/mcp
+  claude_code: claude mcp add --transport http patlytics https://mcp.patlytics.ai/mcp
+authentication:
+  type: oauth2
+  spec: OAuth 2.1 / RFC 9728 protected resource
+  authorization_server: https://mcp.patlytics.ai/
+  resource: https://mcp.patlytics.ai/mcp
+  scopes: [patent:search, patent:read]
+  bearer_methods: [header]
+  dynamic_client_registration: true
+  pkce: [S256]
+  profile: authentication/patlytics-authentication.yml
+  scopes_artifact: scopes/patlytics-scopes.yml
+introspection:
+  tools_list: gated
+  note: >-
+    POST tools/list and initialize to https://mcp.patlytics.ai/mcp both return HTTP 401 with
+    WWW-Authenticate Bearer error="invalid_token" and a resource_metadata pointer, so the live
+    inputSchema set requires an authenticated Patlytics session. The tools below are recorded
+    verbatim from the provider-published connector page at https://mcp.patlytics.ai/docs —
+    names, descriptions and parameter documentation as Patlytics publishes them. Canonical
+    tool ids are only published for list_portfolios and list_vault_patents; the other three
+    are recorded by their published display title with name: null rather than guessed.
+tools:
+- name: null
+  title: Find similar patents
+  description: >-
+    Find patents semantically similar to a described technical concept. Returns concept-level
+    semantic matches over patent claims — useful for prior-art discovery or mapping the
+    landscape around an idea or a reference patent.
+  parameters:
+  - name: concept_description
+    required: true
+    description: >-
+      A detailed, prose description of the invention or technical concept. This search is
+      semantic (not keyword-based), so a rich description of how the invention works, the
+      problem it solves, and its key components yields the most relevant matches.
+  - name: reference_patent_number
+    required: false
+    description: >-
+      Optional. A publication number (e.g. US1234567B2) to anchor the search around a known
+      reference patent.
+- name: null
+  title: Get patent details
+  description: Fetch a specific patent's bibliographic data and claims by publication number.
+  parameters:
+  - name: publication_number
+    required: true
+    description: >-
+      The patent publication number to look up, e.g. US1234567B2 or EP1234567A1. Include the
+      country prefix and (if known) the kind code.
+- name: null
+  title: Search non-patent literature
+  description: Search non-patent literature (papers, journals, books) for a topic or keywords.
+  parameters:
+  - name: query
+    required: true
+    description: >-
+      A topic, concept, or set of keywords to search across non-patent literature — academic
+      papers, journals, conference proceedings, and books (via OpenAlex). Rich, specific
+      phrasing yields the most relevant results.
+- name: list_portfolios
+  title: List your Patlytics portfolios
+  description: >-
+    List the patent portfolios (workspaces) in your Patlytics organization. Returns your
+    org-private portfolios, each with an id you can pass to list_vault_patents to see the
+    patents inside it.
+  parameters: []
+- name: list_vault_patents
+  title: List patents in your Patlytics vault
+  description: >-
+    List the org-private patents saved in your Patlytics vault. Covers patents your
+    organization has saved or uploaded (including unpublished drafts), optionally scoped to a
+    single portfolio.
+  parameters:
+  - name: portfolio_id
+    required: false
+    description: >-
+      Optional. Restrict to the patents in one portfolio (workspace), by the id returned from
+      list_portfolios. Omit to list the whole organization vault.
+data_sources:
+- name: Patlytics patent corpus
+  used_by: [Find similar patents, Get patent details]
+- name: OpenAlex
+  used_by: [Search non-patent literature]
+  note: published by Patlytics as the non-patent-literature source
+- name: Patlytics organization vault / portfolios
+  used_by: [list_portfolios, list_vault_patents]
+  note: org-private; requires patents saved in Patlytics
+support:
+  email: support@patlytics.com
+  privacy_policy: https://www.patlytics.ai/privacy-policy
+x-evidence:
+  fetched: '2026-08-02'
+  probes:
+  - url: https://mcp.patlytics.ai/docs
+    http_status: 200
+    content_type: text/html
+  - url: https://mcp.patlytics.ai/mcp
+    method: POST tools/list
+    http_status: 401
+    content_type: application/json
+    note: WWW-Authenticate Bearer error="invalid_token"
+  - url: https://mcp.patlytics.ai/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json
+  - url: https://mcp.patlytics.ai/.well-known/oauth-protected-resource/mcp
+    http_status: 200
+    content_type: application/json

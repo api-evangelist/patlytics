@@ -1,0 +1,69 @@
+generated: '2026-08-02'
+method: probed
+source: live probes of https://mcp.patlytics.ai and https://api.patlytics.ai on 2026-08-02
+format: custom-json
+note: >-
+  Patlytics publishes no OpenAPI and no error reference page, so this catalog is derived
+  strictly from error responses observed while probing the two API hosts. Bodies are recorded
+  verbatim. Responses are application/json, not application/problem+json, so RFC 9457 does not
+  apply.
+envelopes:
+- host: https://mcp.patlytics.ai
+  shape: OAuth 2.0 error object
+  fields: [error, error_description]
+  content_type: application/json
+- host: https://api.patlytics.ai
+  shape: FastAPI-style detail object
+  fields: [detail]
+  content_type: application/json
+problems:
+- status: 401
+  host: https://mcp.patlytics.ai
+  path: /mcp
+  code: invalid_token
+  title: Authentication failed
+  body: >-
+    {"error": "invalid_token", "error_description": "Authentication failed. The provided
+    bearer token is invalid, expired, or no longer recognized by the server. To resolve: clear
+    authentication tokens in your MCP client and reconnect. Your client should automatically
+    re-register and obtain new tokens."}
+  headers:
+    WWW-Authenticate: >-
+      Bearer error="invalid_token", error_description="...",
+      resource_metadata="https://mcp.patlytics.ai/.well-known/oauth-protected-resource/mcp"
+  remediation: >-
+    Clear stored tokens in the MCP client and reconnect; the client re-registers via the
+    dynamic client registration endpoint and completes the authorization-code + PKCE flow.
+  observed_on: [POST tools/list, POST initialize, GET /mcp]
+- status: 404
+  host: https://mcp.patlytics.ai
+  title: Not Found
+  body: 'Not Found'
+  content_type: text/plain
+  remediation: Use the published endpoint https://mcp.patlytics.ai/mcp.
+- status: 405
+  host: https://mcp.patlytics.ai
+  path: /
+  title: Method Not Allowed
+  body: 'Method Not Allowed'
+  content_type: text/plain
+  headers:
+    Allow: GET, HEAD
+  remediation: >-
+    The host root only serves GET/HEAD (307 redirect to /docs). POST JSON-RPC to /mcp instead.
+- status: 401
+  host: https://api.patlytics.ai
+  path: '*'
+  title: Authorization header is missing
+  body: '{"detail": "Authorization header is missing"}'
+  content_type: application/json
+  remediation: >-
+    Not remediable anonymously. Every path on the platform API host, including /.well-known/,
+    requires an Authorization header; no public token-issuance path is documented.
+observability:
+  request_id_header: x-request-id
+  evidence: >-
+    api.patlytics.ai returns an x-request-id UUID on every response (observed:
+    cd4715f5-5dab-4ce0-a1ef-217242bddfc5); quote it when contacting support@patlytics.com.
+x-evidence:
+  fetched: '2026-08-02'

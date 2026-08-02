@@ -1,0 +1,86 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://mcp.patlytics.ai/docs plus live probes of mcp.patlytics.ai and api.patlytics.ai
+scope: >-
+  Cross-cutting request/response semantics for the Patlytics machine-readable surface. There
+  is no public OpenAPI, so nothing here is derived from a spec — it is the provider's published
+  connector documentation plus behaviour observed on the wire.
+protocol:
+  style: JSON-RPC 2.0 over Streamable HTTP (Model Context Protocol)
+  endpoint: https://mcp.patlytics.ai/mcp
+  content_type: application/json
+  accept: application/json, text/event-stream
+  rest: false
+  graphql: false
+authentication:
+  style: OAuth 2.1 bearer token in the Authorization header
+  per_user: true
+  org_scoped: true
+  dynamic_client_registration: true
+  pkce: S256
+  scopes: [patent:search, patent:read]
+  profile: authentication/patlytics-authentication.yml
+  scopes_artifact: scopes/patlytics-scopes.yml
+  note: >-
+    Access is limited to existing Patlytics users. Session persists and refreshes
+    automatically after a one-time sign-in; there is no API-key or service-account model.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency contract is published, and none is needed on this surface: every published
+    tool is read-only, so there are no state-changing operations to make idempotent. Do not
+    read this as an idempotency gap — it is an absence of writes.
+mutations:
+  read_only: true
+  evidence: >-
+    "All tools are read-only. Deeper analyses — freedom-to-operate, infringement, invalidity,
+    and drafting — run in the Patlytics web app, linked from every result."
+    (https://mcp.patlytics.ai/docs)
+pagination:
+  style: unknown
+  note: >-
+    Not documented; the live tool inputSchemas that would reveal any cursor/limit parameters
+    are auth-gated.
+field_expansion:
+  supported: unknown
+metadata:
+  supported: unknown
+request_tracing:
+  header: x-request-id
+  scope: api.patlytics.ai
+  format: uuid
+  note: >-
+    Observed on every api.patlytics.ai response. Not observed on mcp.patlytics.ai responses.
+versioning:
+  style: none-published
+  detail: lifecycle/patlytics-lifecycle.yml
+error_envelope:
+  mcp: {fields: [error, error_description], shape: OAuth 2.0 error object}
+  platform_api: {fields: [detail], shape: FastAPI detail object}
+  problem_json: false
+  catalog: errors/patlytics-problem-types.yml
+rate_limiting:
+  signaled: false
+  note: >-
+    No RateLimit / X-RateLimit headers or Retry-After were observed on any anonymous response,
+    and no rate-limit policy is published.
+search_semantics:
+  model: semantic, not keyword
+  guidance: >-
+    Provider guidance: "search is semantic, not keyword-based — richer descriptions (how the
+    invention works, the problem it solves, its key components) return more relevant matches."
+  patent_identifier_format: >-
+    Publication number with country prefix and, where known, kind code — e.g. US1234567B2,
+    EP1234567A1.
+transport_security:
+  https_only: true
+  hsts: true
+  detail: security/patlytics-domain-security.yml
+support:
+  email: support@patlytics.com
+  status_page: https://status.patlytics.ai/
+  privacy_policy: https://www.patlytics.ai/privacy-policy
+x-evidence:
+  fetched: '2026-08-02'
