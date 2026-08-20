@@ -32,6 +32,17 @@ tags:
 - Artificial Intelligence
 - Patent Search
 - Prior Art
+- MCP
+- Agents
+- Research
+tags_raw:
+- Company
+- Intellectual Property
+- Patents
+- Legal Tech
+- Artificial Intelligence
+- Patent Search
+- Prior Art
 - Model Context Protocol
 - Agents
 - Research
@@ -52,6 +63,13 @@ apis:
   baseURL: https://mcp.patlytics.ai/mcp
   image: https://cdn.prod.website-files.com/6799236636ce53b60c8d8ba8/679c097be11626243bdde318_Patlytics-Share.webp
   tags:
+  - Patents
+  - Patent Search
+  - Prior Art
+  - Intellectual Property
+  - MCP
+  - Agents
+  tags_raw:
   - Patents
   - Patent Search
   - Prior Art
