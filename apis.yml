@@ -12,6 +12,17 @@ description: 'Patlytics is an AI-powered patent intelligence platform purpose-bu
   semantic patent search, patent/claims lookup, non-patent-literature search over OpenAlex,
   and access to an organization''s private Patlytics portfolios and vault; there is no public
   REST OpenAPI, and the platform API at api.patlytics.ai is fully authentication-gated.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/6799236636ce53b60c8d8ba8/679c097be11626243bdde318_Patlytics-Share.webp
 url: https://raw.githubusercontent.com/api-evangelist/patlytics/refs/heads/main/apis.yml
 x-type: company
