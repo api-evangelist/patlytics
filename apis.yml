@@ -23,6 +23,20 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  - scopes
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://cdn.prod.website-files.com/6799236636ce53b60c8d8ba8/679c097be11626243bdde318_Patlytics-Share.webp
 url: https://raw.githubusercontent.com/api-evangelist/patlytics/refs/heads/main/apis.yml
 x-type: company
