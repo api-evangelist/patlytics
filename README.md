@@ -64,5 +64,109 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Patlytics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/patlytics_stock/
+Patlytics is an AI-powered patent intelligence platform purpose-built for intellectual-property work, applying generative AI and large language models across the full patent lifecycle: invention harvesting and disclosure, patent application drafting, office-action analysis, prior-art and novelty search, infringement detection, invalidity contentions, claim-chart generation, portfolio pruning, vault and classification, and transactional IP due diligence. Founded in 2023 and headquartered in New York, the company raised a $40M Series B led by SignalFire in April 2026 (roughly $65M total) and counts more than 40% of the Am Law 100 among its customers. Its machine-readable surface is a hosted, OAuth-protected Model Context Protocol server at mcp.patlytics.ai that exposes read-only semantic patent search, patent/claims lookup, non-patent-literature search over OpenAlex, and access to an organization's private Patlytics portfolios and vault; there is no public REST OpenAPI, and the platform API at api.patlytics.ai is fully authentication-gated.
+
+**Areas:** Company · Intellectual Property · Patents · Legal Tech · Artificial Intelligence · Patent Search · Prior Art · MCP · Agents · Research
+
+## Patlytics on APIs.io
+
+Everything profiled for Patlytics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/patlytics/](https://apis.io/providers/patlytics/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Patlytics Patent Search (MCP)](https://apis.io/apis/patlytics/patent-search-mcp/) — The Patlytics Patent Search connector — a hosted Model Context Protocol server (Streamable HTTP) that brings concept-level, AI-native patent intelligence…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Patlytics Patent Search](https://apis.io/servers/patlytics/patlytics/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Patlytics Authentication](https://apis.io/security/patlytics/patlytics-authentication/)
+- [Patlytics Domain Security](https://apis.io/security/patlytics/patlytics-domain-security/)
+- [Patlytics Trust Center](https://apis.io/security/patlytics/patlytics-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Patlytics Scopes](https://apis.io/scopes/patlytics/patlytics-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.patlytics.ai/)
+- [Documentation](https://mcp.patlytics.ai/docs)
+- [Getting started](https://mcp.patlytics.ai/docs)
+- [API reference](https://mcp.patlytics.ai/docs)
+- [Sign up](https://explore.patlytics.ai/demo-request)
+- [Blog](https://www.patlytics.ai/blog)
+- [Compliance](https://www.patlytics.ai/security)
+- [Terms of service](https://www.patlytics.ai/terms)
+- [Privacy policy](https://www.patlytics.ai/privacy-policy)
+- [GitHub](https://github.com/patlytics)
+- [Status](https://status.patlytics.ai/)
+
+## API Evangelist rating
+
+**Kin Score 36.8** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.8 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 57.1 |
+| Access clarity | 50.0 |
+
+**Agent readiness 30.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 36.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/patlytics/](https://apis.io/providers/patlytics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Patlytics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/patlytics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
